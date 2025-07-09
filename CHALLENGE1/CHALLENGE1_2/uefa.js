@@ -21,6 +21,7 @@ function readLine() {
     return inputString[currentLine++];
 }
 async function getTeams(year, k) {
+    //lấy dữ liệu từ url rồi trả về 
     const fetch = (url) => new Promise((resolve, reject) => {
         https.get(url, (res) => {
             let data = '';
@@ -34,7 +35,7 @@ async function getTeams(year, k) {
     let page = 1;
     let totalPages = 1;
     const teamMatches = {}; 
-
+// đếm só trận các đội tham gia 
     while (page <= totalPages) {
         const response = await fetch(BASE_URL + page);
         totalPages = response.total_pages;
@@ -50,10 +51,11 @@ async function getTeams(year, k) {
     }
 
    
-    return Object.entries(teamMatches)
-        .filter(([team, count]) => count >= k)
-        .map(([team]) => team)
-        .sort();
+return Object.entries(teamMatches)
+    .filter(([team, count]) => count >= k) // lọc các đội đá >= k trận
+    .map(([team]) => team)                 // chỉ lấy tên đội
+    .sort();                               // sắp xếp theo A-Z
+
 }
 
 async function main() {
