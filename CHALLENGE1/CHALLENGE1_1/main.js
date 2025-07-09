@@ -30,13 +30,16 @@ function logger(msg) {
 }
 function joinedLogger(level, separator) {
     return function(...messages) {
+        // Nếu logger() đang nhận object msg, ta phải chỉ gửi text ra
         const result = messages
-            .filter(msg => msg.level >= level)
-            .map(msg => msg.text)
-            .join(separator);
-        logger({ text: result });
+            .filter(msg => msg.level >= level)// lọc ra log có level thỏa điều kiện
+            .map(msg => msg.text) // biến mảng vừa lọc đc thành text
+            .join(separator); // nối các text lại với nhau
+
+        logger({ text: result }); // Giữ đúng format object { text } vì logger dùng `${msg.text}`
     };
 }
+
 function main() {
   const firstLine = readLine().trim().split(" ");
   const level = parseInt(firstLine[0]);
