@@ -1,0 +1,145 @@
+{
+  "info": {
+    "name": "Product API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get all products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/product",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "product"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get product by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/product/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "product",
+            ":id"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get product by slug",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/product/slug/:slug",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "product",
+            "slug",
+            ":slug"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create new product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"iPhone 15\",\n  \"slug\": \"iphone-15\",\n  \"quantity\": 10\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/product",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "product"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update product by ID",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"iPhone 15 Pro\",\n  \"slug\": \"iphone-15-pro\",\n  \"quantity\": 5\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/product/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "product",
+            ":id"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete product by ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/product/:id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "product",
+            ":id"
+          ]
+        }
+      }
+    }
+  ]
+}
