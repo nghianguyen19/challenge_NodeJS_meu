@@ -1,21 +1,22 @@
+
 import db from '../db.js';
 import { v4 as uuidv4 } from 'uuid';
-
+//lấy tất cả sản phẩm
 export const getAll = async (req, res) => {
   const result = await db.query('SELECT * FROM product ORDER BY created_at DESC');
   res.json(result.rows);
 };
-
+// lấy theo ID
 export const getById = async (req, res) => {
   const result = await db.query('SELECT * FROM product WHERE id = $1', [req.params.id]);
   res.json(result.rows[0]);
 };
-
+// lấy theo Slug
 export const getBySlug = async (req, res) => {
   const result = await db.query('SELECT * FROM product WHERE slug = $1', [req.params.slug]);
   res.json(result.rows[0]);
 };
-
+// tạo sản phẩm 
 export const create = async (req, res) => {
   const { name, slug, quantity } = req.body;
   const id = uuidv4();
@@ -25,7 +26,7 @@ export const create = async (req, res) => {
   );
   res.status(201).json(result.rows[0]);
 };
-
+//Cập nhật sản phẩm theo id, đồng thời cập nhật updated_at về thời gian hiện tại.
 export const update = async (req, res) => {
   const { name, slug, quantity } = req.body;
   const result = await db.query(
@@ -34,11 +35,12 @@ export const update = async (req, res) => {
   );
   res.json(result.rows[0]);
 };
-
+// xóa theo id
 export const remove = async (req, res) => {
   await db.query('DELETE FROM product WHERE id = $1', [req.params.id]);
   res.json({ message: 'Product deleted' });
 };
+// xóa tất cả
 export const removeAll = async (req, res) => {
   await db.query('DELETE FROM product');
   res.json({ message: 'All products deleted' });
