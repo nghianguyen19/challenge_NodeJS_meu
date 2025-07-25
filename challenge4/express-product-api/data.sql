@@ -1,0 +1,8 @@
+CREATE TABLE product (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255),
+    slug VARCHAR(255),
+    quantity INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

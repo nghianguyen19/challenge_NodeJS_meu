@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: nghiaw123
+      POSTGRES_DB: product_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init-user.sql:/docker-entrypoint-initdb.d/init-user.sql 
+
+  api:
+    build: .
+    container_name: express_api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: nghiaw123  
+      DB_NAME: product_db
+    volumes:
+      - .:/app
+    command: npm run dev
+
+volumes:
+  pgdata:
