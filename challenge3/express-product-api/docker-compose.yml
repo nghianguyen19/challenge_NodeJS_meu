@@ -13,6 +13,7 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  
 
   api:
     build: .
@@ -26,7 +27,7 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: postgres
-      DB_PASSWORD: 123456
+      DB_PASSWORD: nghiaw123  
       DB_NAME: product_db
     volumes:
       - .:/app
