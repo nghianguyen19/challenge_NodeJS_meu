@@ -14,7 +14,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./init-user.sql:/docker-entrypoint-initdb.d/init-user.sql 
+      - ./init-user.sql:/docker-entrypoint-initdb.d/init-user.sql #thêm để tạo database cho user
 
   api:
     build: .
