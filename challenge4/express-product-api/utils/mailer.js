@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 // Thiết lập nội dung mail
 export const sendOTP = async (email, otp) => {
   await transporter.sendMail({
-    from: `"MyApp 👻" <${process.env.MAIL_USER}>`,
+    from: `"MyApp " <${process.env.MAIL_USER}>`,
     to: email,
     subject: "OTP Verification",
     text: `Your OTP is: ${otp}`,
