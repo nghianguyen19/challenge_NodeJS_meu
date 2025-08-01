@@ -1,37 +1,38 @@
-version: '3.8'
+version: '3.8'  
 
-services:
-  db:
-    image: postgres:14
-    container_name: postgres_container
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: nghiaw123
-      POSTGRES_DB: product_db
+services:  #  các dịch vụ (containers) sẽ chạy
+
+  db:  #  PostgreSQL
+    image: postgres:14  # Sử dụng image PostgreSQL phiên bản 14 từ Docker Hub
+    container_name: postgres_container  # Đặt tên container là postgres_container
+    restart: always  # Tự động khởi động lại container nếu bị dừng
+    environment:  # Các biến môi trường cấu hình cho PostgreSQL
+      POSTGRES_USER: postgres 
+      POSTGRES_PASSWORD: nghiaw123  
+      POSTGRES_DB: product_db  
     ports:
-      - "5432:5432"
+      - "5432:5432"  # Mở cổng 5432 để có thể truy cập DB từ máy host
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  
+      - pgdata:/var/lib/postgresql/data  # Lưu trữ dữ liệu DB để không bị mất khi container bị xóa
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Chạy script SQL khởi tạo DB khi container khởi tạo lần đầu
 
-  api:
-    build: .
-    container_name: express_api
+  api:  # Dịch vụ chạy ứng dụng Express.js
+    build: .  # Build Docker image từ Dockerfile trong thư mục hiện tại
+    container_name: express_api  
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Mở cổng 3000 để truy cập API từ trình duyệt hoặc Postman
     depends_on:
-      - db
-    environment:
-      PORT: 3000
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
+      - db  # Chờ dịch vụ db chạy trước khi khởi động api
+    environment:  # Các biến môi trường cần thiết để kết nối DB từ Express app
+      PORT: 3000  
+      DB_HOST: db  
+      DB_PORT: 5432  
+      DB_USER: postgres  
       DB_PASSWORD: nghiaw123  
-      DB_NAME: product_db
+      DB_NAME: product_db 
     volumes:
-      - .:/app
-    command: npm run dev
+      - .:/app  
+    command: npm run dev  # Lệnh để khởi động ứng dụng Express
 
 volumes:
-  pgdata:
+  pgdata:  # Định nghĩa volume tên pgdata để lưu dữ liệu PostgreSQL
