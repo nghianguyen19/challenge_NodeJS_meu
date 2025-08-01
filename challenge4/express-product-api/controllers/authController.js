@@ -1,10 +1,10 @@
-const db = require('../db');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
-const { sendOTP } = require('../utils/mailer');
+import db from '../db.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+import { sendOTP } from '../utils/mailer.js';
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
   const { name, email, password } = req.body;
   const hashed = await bcrypt.hash(password, 10);
   const id = uuidv4();
@@ -25,7 +25,7 @@ const register = async (req, res) => {
   }
 };
 
-const verifyOTP = async (req, res) => {
+export const verifyOTP = async (req, res) => {
   const { email, otp } = req.body;
 
   try {
@@ -52,7 +52,7 @@ const verifyOTP = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -74,5 +74,3 @@ const login = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
-module.exports = { register, verifyOTP, login };
