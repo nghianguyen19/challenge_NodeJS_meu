@@ -1,5 +1,8 @@
 import express from 'express';
 import * as controller from '../controllers/productController.js';
+import { authorize } from '../middlewares/authMiddleware.js';
+import { validate } from '../middlewares/validateMiddleware.js';
+import { createProductDto, updateProductDto } from '../dto/productDto.js';
 
 const router = express.Router();
 
@@ -16,11 +19,16 @@ const router = express.Router();
  *   get:
  *     summary: Get all products
  *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: List of products
+ *         description: List of all products
+ *       401:
+ *         description: Unauthorized
  */
-router.get('/', controller.getAll);
+router.get('/', authorize, controller.getAll);
+
 
 /**
  * @swagger
@@ -28,27 +36,21 @@ router.get('/', controller.getAll);
  *   post:
  *     summary: Create a new product
  *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - name
- *               - price
- *             properties:
- *               name:
- *                 type: string
- *               price:
- *                 type: number
- *               description:
- *                 type: string
+ *             $ref: '#/components/schemas/Product'
  *     responses:
  *       201:
  *         description: Product created successfully
+ *       401:
+ *         description: Unauthorized
  */
-router.post('/', controller.create);
+router.post('/', authorize, createProductDto, validate, controller.create);
 
 /**
  * @swagger
@@ -96,6 +98,8 @@ router.get('/slug/:slug', controller.getBySlug);
  *   put:
  *     summary: Update product by ID
  *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -107,21 +111,16 @@ router.get('/slug/:slug', controller.getBySlug);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               price:
- *                 type: number
- *               description:
- *                 type: string
+ *             $ref: '#/components/schemas/Product'
  *     responses:
  *       200:
  *         description: Product updated
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Product not found
  */
-router.put('/:id', controller.update);
+router.put('/:id', authorize, updateProductDto, validate , controller.update);
 
 /**
  * @swagger
@@ -129,6 +128,8 @@ router.put('/:id', controller.update);
  *   delete:
  *     summary: Delete product by ID
  *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -138,10 +139,12 @@ router.put('/:id', controller.update);
  *     responses:
  *       200:
  *         description: Product deleted
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Product not found
  */
-router.delete('/:id', controller.remove);
+router.delete('/:id', authorize, controller.remove);
 
 /**
  * @swagger
@@ -149,10 +152,14 @@ router.delete('/:id', controller.remove);
  *   delete:
  *     summary: Delete all products
  *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: All products deleted
+ *       401:
+ *         description: Unauthorized
  */
-router.delete('/', controller.removeAll);
+router.delete('/', authorize, controller.removeAll);
 
 export default router;

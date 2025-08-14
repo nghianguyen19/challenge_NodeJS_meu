@@ -3,3 +3,11 @@ npm run dev
 //
 docker compose down -v
 docker compose up --build
+
+docker compose down -v
+docker compose build --no-cache
+docker compose up
+
+cd express-product-api
+
+cd challenge5

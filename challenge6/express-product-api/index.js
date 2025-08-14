@@ -19,7 +19,7 @@ const swaggerSpec = swaggerJsdoc({
     info: {
       title: 'Product API with JWT and OTP Verification',
       version: '1.0.0',
-      description: 'API documentation for the Challenge 4 Express.js server',
+      description: 'API documentation for the  Express.js server',
     },
     servers: [
       {
